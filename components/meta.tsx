@@ -1,5 +1,4 @@
-import Head from 'next/head'
-import { HOME_OG_IMAGE_URL } from '../lib/constants'
+import Head from "next/head";
 
 const Meta = () => {
   return (
@@ -36,9 +35,11 @@ const Meta = () => {
         name="description"
         content={`Pictures to browse on Friday morning.`}
       />
-      <meta property="og:image" content={HOME_OG_IMAGE_URL} />
+      {
+        //<meta property="og:image" content={HOME_OG_IMAGE_URL} />
+      }
     </Head>
-  )
-}
+  );
+};
 
-export default Meta
+export default Meta;

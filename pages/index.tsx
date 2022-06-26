@@ -10,7 +10,7 @@ type Props = {
 const Index = ({ latestPost }: Props) => {
   const router = useRouter();
   useEffect(() => {
-    router.push(`/${latestPost.slug}`);
+    router.push(`/${latestPost.date}`);
   }, [router, latestPost]);
 
   return <></>;
@@ -19,7 +19,7 @@ const Index = ({ latestPost }: Props) => {
 export default Index;
 
 export const getStaticProps = async () => {
-  const allPosts = getAllPosts(["slug"]);
+  const allPosts = getAllPosts();
   const latestPost = allPosts[0];
   return {
     props: { latestPost },

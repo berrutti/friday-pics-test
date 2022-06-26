@@ -2,8 +2,7 @@ import Head from "next/head";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
 
-import { getPostBySlug, getAllPosts } from "../lib/api";
-import markdownToHtml from "../lib/markdownToHtml";
+import { getPostByDate, getAllPosts } from "../lib/api";
 
 import Container from "../components/container";
 import PostBody from "../components/post-body";
@@ -11,21 +10,21 @@ import Header from "../components/header";
 import Layout from "../components/layout";
 import PostTitle from "../components/post-title";
 
-import PostType from "../types/post";
+import Post from "../types/post";
 
 type Props = {
-  post: PostType;
-  morePosts: PostType[];
+  post: Post;
+  morePosts: Post[];
   preview?: boolean;
 };
 
-const Post = ({ post, morePosts, preview }: Props) => {
+const Post = ({ post, morePosts }: Props) => {
   const router = useRouter();
-  if (!router.isFallback && !post?.slug) {
+  if (!router.isFallback && !post?.date) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout preview={preview}>
+    <Layout>
       <Container>
         <Header />
         {router.isFallback ? (
@@ -34,11 +33,11 @@ const Post = ({ post, morePosts, preview }: Props) => {
           <>
             <article className="mb-32">
               <Head>
-                <title>{post.title} | Friday Pics!</title>
-                <meta property="og:image" content={post.image} />
+                <title>{post.date} | Friday Pics!</title>
+                <meta property="og:image" content={post.preview} />
               </Head>
-              <PostTitle>{post.title}</PostTitle>
-              <PostBody content={post.content} />
+              <PostTitle>{post.date}</PostTitle>
+              <PostBody pics={post.pics} />
             </article>
           </>
         )}
@@ -51,42 +50,30 @@ export default Post;
 
 type Params = {
   params: {
-    slug: string;
+    date: string;
   };
 };
 
 export async function getStaticProps({ params }: Params) {
-  const post = getPostBySlug(params.slug, [
-    "title",
-    "date",
-    "slug",
-    "author",
-    "content",
-    "ogImage",
-    "coverImage",
-  ]);
+  const post = getPostByDate(params.date);
   const allPosts = getAllPosts();
-  const content = await markdownToHtml(post.content || "");
 
   return {
     props: {
-      post: {
-        ...post,
-        content,
-      },
+      post,
       morePosts: allPosts,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(["slug"]);
+  const posts = getAllPosts();
 
   return {
-    paths: posts.map((post) => {
+    paths: posts.map((post: any) => {
       return {
         params: {
-          slug: post.slug,
+          date: post.date,
         },
       };
     }),

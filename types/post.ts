@@ -1,14 +1,9 @@
-import Author from './author'
+import Pic from "./pic";
 
-type PostType = {
-  slug: string
-  title: string
-  date: string
-  coverImage: string
-  author: Author
-  excerpt: string
-  image: string
-  content: string
-}
+type Post = {
+  date: string;
+  pics: Pic[];
+  preview: string;
+};
 
-export default PostType
+export default Post;
