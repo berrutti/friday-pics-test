@@ -3,13 +3,13 @@ import { join } from "path";
 
 const postsDirectory = join(process.cwd(), "_posts");
 
-export function getPostByDate(date: string) {
-  const fullPath = join(postsDirectory, date);
+export function getPostByFilename(filename: string) {
+  const fullPath = join(postsDirectory, filename);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const content = JSON.parse(fileContents);
 
   const post = {
-    date: date,
+    date: content.date,
     preview: content.preview,
     pics: content.pics,
   };
@@ -18,7 +18,7 @@ export function getPostByDate(date: string) {
 }
 
 export function getAllPosts() {
-  const postNames = fs.readdirSync(postsDirectory).reverse();
+  const fileNames = fs.readdirSync(postsDirectory).reverse();
 
-  return postNames.map((name) => getPostByDate(name));
+  return fileNames.map((filename) => getPostByFilename(filename));
 }

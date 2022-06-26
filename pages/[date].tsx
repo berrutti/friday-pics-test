@@ -2,7 +2,7 @@ import Head from "next/head";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
 
-import { getPostByDate, getAllPosts } from "../lib/api";
+import { getPostByFilename, getAllPosts } from "../lib/api";
 
 import Container from "../components/container";
 import PostBody from "../components/post-body";
@@ -55,7 +55,7 @@ type Params = {
 };
 
 export async function getStaticProps({ params }: Params) {
-  const post = getPostByDate(params.date);
+  const post = getPostByFilename(`${params.date}.json`);
   const allPosts = getAllPosts();
 
   return {

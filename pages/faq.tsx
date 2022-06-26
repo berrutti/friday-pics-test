@@ -18,7 +18,7 @@ const Faq = () => {
           PR!): CrappyDesign nocontextpics funny funnysigns Funnypics
           AdviceAnimals pics hmmm Eyebleach memes Original posters (OPs) are
           credited. If you are the creator of one of these images and want it
-          removed, please contact me, and I'll gladly take it down. If you want
+          removed, please contact me, and Ill gladly take it down. If you want
           to take a look at the scrapper, you can do so on this repository:
           https://github.com/berrutti/friday-pics-bot. Thanks and have fun!
         </Container>
